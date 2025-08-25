@@ -7,149 +7,276 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #12c2e9, #c471ed, #f64f59);
-            background-size: 400% 400%;
-            color: white;
-            text-align: center;
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+        :root {
+            --bg-primary: #1c1e21;
+            --bg-secondary: #272a2e;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b3b8;
+            --accent: #5d8bff;
+            --hover-bg: #2d3035;
+            --border: #3a3d42;
+        }
+
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
             height: 100vh;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* Боковая панель (как в Telegram) */
+        .sidebar {
+            width: 300px;
+            background-color: var(--bg-secondary);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            height: 100vh;
+            flex-shrink: 0;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sidebar-header h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .sidebar-header p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+
+        .menu {
+            padding: 10px 0;
+            flex-grow: 1;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 14px 20px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 1.05rem;
+            transition: background 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .menu-item:hover {
+            background-color: var(--hover-bg);
+        }
+
+        .menu-item.active {
+            background-color: var(--hover-bg);
+            border-left-color: var(--accent);
+            font-weight: 500;
+        }
+
+        .menu-item i {
+            width: 24px;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .menu-item.active i {
+            color: var(--accent);
+        }
+
+        /* Основное содержимое */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .hero {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+            flex-grow: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            animation: gradientShift 15s ease infinite;
         }
 
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+            font-weight: 600;
         }
 
-        h1 {
-            font-size: 3.5rem;
-            margin-bottom: 15px;
-            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
-            animation: float 3s ease-in-out infinite;
-        }
-
-        p {
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin: 0 auto 40px;
-            opacity: 0.9;
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
             line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 20px;
         }
 
         .btn {
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            padding: 14px 28px;
-            margin: 10px;
-            font-size: 1.1rem;
-            font-weight: 600;
+            padding: 12px 20px;
+            background-color: var(--accent);
             color: white;
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px solid rgba(255, 255, 255, 0.4);
-            border-radius: 50px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
             text-decoration: none;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: background 0.2s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
         .btn:hover {
-            background: rgba(255, 255, 255, 0.35);
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            background-color: #4a76d8;
         }
 
         .btn i {
-            font-size: 1.3em;
+            font-size: 1.1em;
         }
 
-        .btn-group {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-            max-width: 800px;
-            margin: 20px auto;
+        .footer {
+            margin-top: 40px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
         }
 
-        .links {
-            margin-top: 50px;
-            font-size: 0.95rem;
-        }
-
-        .links a {
-            color: rgba(255, 255, 255, 0.8);
-            margin: 0 12px;
+        .footer a {
+            color: var(--accent);
             text-decoration: none;
-            transition: 0.3s;
+            margin: 0 10px;
         }
 
-        .links a:hover {
-            color: white;
+        .footer a:hover {
             text-decoration: underline;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        @media (max-width: 900px) {
+            .sidebar {
+                width: 240px;
+            }
+            .main-content {
+                padding: 30px;
+            }
+            .hero h2 {
+                font-size: 2rem;
+            }
         }
 
         @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            .btn { padding: 12px 22px; font-size: 1rem; }
-            .btn-group { gap: 10px; }
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                max-height: 300px;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+            .main-content {
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>💬 MaxChat</h1>
-    <p>Общайся в реальном времени с друзьями и незнакомцами. Безопасно, быстро и удобно.</p>
-
-    <div class="btn-group">
-        <a href="/chat" class="btn">
-            <i class="fas fa-comments"></i> Открыть чат
-        </a>
-        <a href="/start-chat" class="btn">
-            <i class="fas fa-paper-plane"></i> Начать переписку
-        </a>
-        <a href="/call" class="btn">
-            <i class="fas fa-phone"></i> Начать звонок
-        </a>
-        <a href="/video" class="btn">
-            <i class="fas fa-film"></i> Видео
-        </a>
-        <a href="/video-call" class="btn">
-            <i class="fas fa-video"></i> Видео-чат
-        </a>
-        <a href="/find-user" class="btn">
-            <i class="fas fa-user-plus"></i> Найти собеседника
-        </a>
-        <a href="/settings" class="btn">
-            <i class="fas fa-cog"></i> Настройки
-        </a>
-        <a href="/about" class="btn">
-            <i class="fas fa-info-circle"></i> О нас
-        </a>
-        <a href="/privacy" class="btn">
-            <i class="fas fa-shield-alt"></i> Конфиденциальность
-        </a>
+    <!-- Боковая панель -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h1><i class="fas fa-comment-dots"></i> MaxChat</h1>
+            <p>Общайся свободно и безопасно</p>
+        </div>
+        <nav class="menu">
+            <a href="/start-chat" class="menu-item active">
+                <i class="fas fa-paper-plane"></i>
+                Начать чат
+            </a>
+            <a href="/call" class="menu-item">
+                <i class="fas fa-phone"></i>
+                Аудиозвонок
+            </a>
+            <a href="/video-call" class="menu-item">
+                <i class="fas fa-video"></i>
+                Видеочат
+            </a>
+            <a href="/find-user" class="menu-item">
+                <i class="fas fa-user-plus"></i>
+                Найти собеседника
+            </a>
+            <a href="/settings" class="menu-item">
+                <i class="fas fa-cog"></i>
+                Настройки
+            </a>
+            <a href="/about" class="menu-item">
+                <i class="fas fa-info-circle"></i>
+                О нас
+            </a>
+            <a href="/privacy" class="menu-item">
+                <i class="fas fa-shield-alt"></i>
+                Конфиденциальность
+            </a>
+        </nav>
     </div>
 
-    <div class="links">
-        <a href="/about">О нас</a>
-        <a href="/privacy">Конфиденциальность</a>
-        <a href="/help">Помощь</a>
+    <!-- Основное содержимое -->
+    <div class="main-content">
+        <div class="hero">
+            <h2>💬 Добро пожаловать в MaxChat</h2>
+            <p>Быстрые сообщения, звонки и видеосвязь в одном месте. Безопасно, надёжно, мгновенно.</p>
+            <div class="btn-group">
+                <a href="/start-chat" class="btn">
+                    <i class="fas fa-comments"></i> Открыть чат
+                </a>
+                <a href="/video-call" class="btn">
+                    <i class="fas fa-video"></i> Видео-чат
+                </a>
+                <a href="/find-user" class="btn">
+                    <i class="fas fa-user-plus"></i> Найти друга
+                </a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <a href="/help">Помощь</a>
+            <a href="/terms">Условия использования</a>
+            <a href="/privacy">Конфиденциальность</a>
+        </div>
     </div>
 </body>
 </html>
