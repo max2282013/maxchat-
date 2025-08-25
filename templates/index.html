@@ -107,11 +107,6 @@
             box-shadow: 0 0 0 2px rgba(93, 139, 255, 0.2);
         }
 
-        .menu-item:active {
-            transform: scale(0.98);
-            box-shadow: 0 0 0 2px rgba(93, 139, 255, 0.3);
-        }
-
         .menu-item.active {
             background-color: var(--hover-bg);
             border-left-color: var(--accent);
@@ -399,21 +394,24 @@
         </div>
 
         <nav class="menu">
-            <a href="/start-chat" class="menu-item active">
-                <i class="fas fa-paper-plane"></i>
-                Начать чат
+            <!-- Новая кнопка "Главная" с иконкой домика -->
+            <a href="/" class="menu-item active">
+                <i class="fas fa-home"></i> Главная
             </a>
+
+            <!-- "Начать чат" с синей стрелкой -->
+            <a href="/start-chat" class="menu-item">
+                <i class="fas fa-paper-plane" style="color: #5d8bff;"></i> Начать чат
+            </a>
+
             <a href="/call" class="menu-item">
-                <i class="fas fa-phone"></i>
-                Аудиозвонок
+                <i class="fas fa-phone"></i> Аудиозвонок
             </a>
             <a href="/video-call" class="menu-item">
-                <i class="fas fa-video"></i>
-                Видеочат
+                <i class="fas fa-video"></i> Видеочат
             </a>
             <a href="/find-user" class="menu-item">
-                <i class="fas fa-user-plus"></i>
-                Найти собеседника
+                <i class="fas fa-user-plus"></i> Найти собеседника
             </a>
         </nav>
 
@@ -493,7 +491,8 @@
                 const dropdown = document.getElementById('dropdownMenu');
                 dropdown.style.opacity = '0';
                 dropdown.style.visibility = 'hidden';
-            }, 3000); // 3 секунды
+                dropdown.style.pointerEvents = 'none';
+            }, 1000); // 1 секунда задержка
         }
 
         // Отмена закрытия
@@ -515,6 +514,7 @@
             const dropdown = document.getElementById('dropdownMenu');
             dropdown.style.opacity = '0';
             dropdown.style.visibility = 'hidden';
+            dropdown.style.pointerEvents = 'none';
         }
 
         // Переключение темы
@@ -553,12 +553,15 @@
         const container = document.getElementById('avatarContainer');
         const dropdown = document.getElementById('dropdownMenu');
 
+        // При наведении на контейнер — показываем меню
         container.addEventListener('mouseenter', () => {
             cancelClose();
             dropdown.style.opacity = '1';
             dropdown.style.visibility = 'visible';
+            dropdown.style.pointerEvents = 'auto';
         });
 
+        // При уходе с контейнера — планируем закрытие
         container.addEventListener('mouseleave', () => {
             scheduleClose();
         });
