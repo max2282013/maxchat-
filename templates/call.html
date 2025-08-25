@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Звонок — MaxChat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #000;
+            color: white;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            padding: 40px 20px;
+            max-width: 800px;
+            width: 90%;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            color: #00ff41;
+            text-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
+        }
+
+        .status {
+            font-size: 1.3rem;
+            color: #aaa;
+            margin: 15px 0;
+            font-weight: 300;
+        }
+
+        .call-info {
+            background: rgba(30, 30, 30, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px auto;
+            max-width: 500px;
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            background: #333;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            border: 3px solid #00ff41;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .name {
+            font-size: 1.5rem;
+            color: white;
+            margin: 10px 0;
+        }
+
+        .time {
+            font-size: 1.1rem;
+            color: #00ff41;
+            margin: 10px 0;
+            font-weight: 600;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .btn {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+
+        .end {
+            background: #ff3b30;
+            color: white;
+            box-shadow: 0 0 20px rgba(255, 59, 48, 0.6);
+        }
+
+        .mute, .video {
+            background: #333;
+            color: white;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+        }
+
+        .end:hover {
+            background: #cc0000;
+            box-shadow: 0 0 30px rgba(255, 59, 48, 0.8);
+        }
+
+        .back {
+            margin-top: 30px;
+            display: inline-block;
+            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .back:hover {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Анимация "подключение" */
+        .pulse {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background: #00ff41;
+            border-radius: 50%;
+            margin-left: 10px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+
+        .signal {
+            color: #00ff41;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-phone"></i> Звонок</h1>
+        <div class="status">Соединение... <span class="pulse"></span></div>
+
+        <div class="call-info">
+            <div class="avatar">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="name">Собеседник</div>
+            <div class="time">Подключение к серверу... <span class="signal">●</span></div>
+        </div>
+
+        <div class="controls">
+            <button class="btn mute" title="Отключить микрофон">
+                <i class="fas fa-microphone"></i>
+            </button>
+            <button class="btn end" title="Завершить звонок">
+                <i class="fas fa-phone-slash"></i>
+            </button>
+            <button class="btn video" title="Включить камеру">
+                <i class="fas fa-video-slash"></i>
+            </button>
+        </div>
+
+        <a href="/" class="back">← Вернуться на главную</a>
+    </div>
+
+    <script>
+        // Простая имитация подключения
+        setTimeout(() => {
+            document.querySelector('.status').innerHTML = "На связи!";
+            document.querySelector('.time').innerHTML = "00:12";
+            document.querySelector('.signal').style.color = "#00ff41";
+        }, 3000);
+
+        // Кнопка "Завершить"
+        document.querySelector('.end').onclick = () => {
+            alert("Звонок завершён.");
+            window.location.href = "/";
+        };
+    </script>
+</body>
+</html>
