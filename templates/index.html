@@ -1,4 +1,3 @@
-<!-- templates/index.html -->
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -12,6 +11,7 @@
         :root {
             --bg-primary: #1c1e21;
             --bg-secondary: #272a2e;
+            --bg-tooltip: #2d3035;
             --text-primary: #ffffff;
             --text-secondary: #b0b3b8;
             --accent: #5d8bff;
@@ -19,10 +19,22 @@
             --border: #3a3d42;
         }
 
+        [data-theme="light"] {
+            --bg-primary: #f4f6f8;
+            --bg-secondary: #ffffff;
+            --bg-tooltip: #ffffff;
+            --text-primary: #222222;
+            --text-secondary: #666666;
+            --accent: #0088cc;
+            --hover-bg: #e9ecef;
+            --border: #dee2e6;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         body {
@@ -34,22 +46,24 @@
             overflow: hidden;
         }
 
-        /* Боковая панель (как в Telegram) */
+        /* Боковая панель */
         .sidebar {
             width: 300px;
             background-color: var(--bg-secondary);
             border-right: 1px solid var(--border);
             display: flex;
             flex-direction: column;
-            overflow-y: auto;
             height: 100vh;
-            flex-shrink: 0;
         }
 
         .sidebar-header {
             padding: 20px;
             text-align: center;
             border-bottom: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
         }
 
         .sidebar-header h1 {
@@ -58,14 +72,12 @@
             color: var(--accent);
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 10px;
         }
 
         .sidebar-header p {
             font-size: 0.9rem;
             color: var(--text-secondary);
-            margin-top: 5px;
         }
 
         .menu {
@@ -81,12 +93,23 @@
             color: var(--text-primary);
             text-decoration: none;
             font-size: 1.05rem;
-            transition: background 0.2s;
+            transition: all 0.2s ease;
             border-left: 3px solid transparent;
+            border: 1px solid transparent;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
         }
 
         .menu-item:hover {
             background-color: var(--hover-bg);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(93, 139, 255, 0.2);
+        }
+
+        .menu-item:active {
+            transform: scale(0.98);
+            box-shadow: 0 0 0 2px rgba(93, 139, 255, 0.3);
         }
 
         .menu-item.active {
@@ -103,6 +126,155 @@
 
         .menu-item.active i {
             color: var(--accent);
+        }
+
+        /* Профиль и действия */
+        .sidebar-footer {
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-top: 1px solid var(--border);
+            background-color: var(--bg-secondary);
+        }
+
+        .notifications {
+            color: var(--text-secondary);
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 5px;
+            margin-right: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .notifications:hover {
+            color: var(--accent);
+            transform: scale(1.1);
+        }
+
+        .notifications-badge {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            width: 10px;
+            height: 10px;
+            background-color: #ff3b30;
+            border-radius: 50%;
+        }
+
+        /* Обёртка: аватар + выпадающее меню */
+        .avatar-menu-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #5d8bff, #7a64ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.05);
+        }
+
+        .user-avatar:active {
+            transform: scale(0.95);
+        }
+
+        /* Всплывающее меню — появляется при наведении на контейнер */
+        .profile-dropdown {
+            position: absolute;
+            bottom: 50px;
+            left: 0;
+            width: 240px;
+            background-color: var(--bg-tooltip);
+            color: var(--text-primary);
+            padding: 10px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            font-size: 0.95rem;
+            z-index: 10;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+            pointer-events: none;
+        }
+
+        .avatar-menu-container:hover .profile-dropdown {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .dropdown-item {
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: 1px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--hover-bg);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(93, 139, 255, 0.3);
+        }
+
+        .dropdown-item:active {
+            transform: scale(0.98);
+        }
+
+        .dropdown-item i {
+            width: 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 1.1em;
+        }
+
+        .dropdown-item:hover i {
+            color: var(--accent);
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background-color: var(--border);
+            margin: 8px 0;
+        }
+
+        /* Информация о пользователе */
+        .user-info {
+            line-height: 1.2;
+            flex-grow: 1;
+        }
+
+        .user-name {
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .user-status {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
         }
 
         /* Основное содержимое */
@@ -158,12 +330,22 @@
             font-size: 1rem;
             font-weight: 500;
             text-decoration: none;
-            transition: background 0.2s;
+            transition: all 0.2s ease;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
         }
 
         .btn:hover {
             background-color: #4a76d8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
         .btn i {
@@ -174,43 +356,36 @@
             margin-top: 40px;
             font-size: 0.9rem;
             color: var(--text-secondary);
+            text-align: center;
         }
 
         .footer a {
             color: var(--accent);
             text-decoration: none;
             margin: 0 10px;
+            transition: all 0.2s ease;
         }
 
         .footer a:hover {
+            color: var(--accent);
             text-decoration: underline;
-        }
-
-        @media (max-width: 900px) {
-            .sidebar {
-                width: 240px;
-            }
-            .main-content {
-                padding: 30px;
-            }
-            .hero h2 {
-                font-size: 2rem;
-            }
+            transform: scale(1.05);
         }
 
         @media (max-width: 768px) {
-            body {
-                flex-direction: column;
-            }
             .sidebar {
                 width: 100%;
                 height: auto;
-                max-height: 300px;
-                border-right: none;
                 border-bottom: 1px solid var(--border);
+                border-right: none;
             }
             .main-content {
                 padding: 20px;
+            }
+            .profile-dropdown {
+                left: 50%;
+                transform: translateX(-50%);
+                width: 260px;
             }
         }
     </style>
@@ -222,6 +397,7 @@
             <h1><i class="fas fa-comment-dots"></i> MaxChat</h1>
             <p>Общайся свободно и безопасно</p>
         </div>
+
         <nav class="menu">
             <a href="/start-chat" class="menu-item active">
                 <i class="fas fa-paper-plane"></i>
@@ -239,19 +415,45 @@
                 <i class="fas fa-user-plus"></i>
                 Найти собеседника
             </a>
-            <a href="/settings" class="menu-item">
-                <i class="fas fa-cog"></i>
-                Настройки
-            </a>
-            <a href="/about" class="menu-item">
-                <i class="fas fa-info-circle"></i>
-                О нас
-            </a>
-            <a href="/privacy" class="menu-item">
-                <i class="fas fa-shield-alt"></i>
-                Конфиденциальность
-            </a>
         </nav>
+
+        <!-- Футер: профиль -->
+        <div class="sidebar-footer">
+            <!-- Уведомления -->
+            <button class="notifications">
+                <i class="fas fa-bell"></i>
+                <span class="notifications-badge"></span>
+            </button>
+
+            <!-- Обёртка: аватар + меню -->
+            <div class="avatar-menu-container" id="avatarContainer">
+                <div class="user-avatar">М</div>
+                <div class="profile-dropdown" id="dropdownMenu">
+                    <a href="/settings" class="dropdown-item" onclick="closeDropdownAndRedirect(this);">
+                        <i class="fas fa-cog"></i> Настройки
+                    </a>
+                    <a href="/profile/full" class="dropdown-item" onclick="closeDropdownAndRedirect(this);">
+                        <i class="fas fa-user"></i> Полный профиль
+                    </a>
+                    <a href="#" class="dropdown-item" id="theme-toggle" onclick="toggleTheme(); closeDropdown(); return false;">
+                        <i class="fas fa-moon"></i> <span id="theme-text">Тёмная тема</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="/profile/edit" class="dropdown-item" onclick="closeDropdownAndRedirect(this);">
+                        <i class="fas fa-user-edit"></i> Редактировать профиль
+                    </a>
+                    <a href="/logout" class="dropdown-item" style="color: #ff3b30;" onclick="closeDropdownAndRedirect(this);">
+                        <i class="fas fa-sign-out-alt"></i> Выйти
+                    </a>
+                </div>
+            </div>
+
+            <!-- Имя и статус -->
+            <div class="user-info">
+                <div class="user-name">MaxUser</div>
+                <div class="user-status">В сети</div>
+            </div>
+        </div>
     </div>
 
     <!-- Основное содержимое -->
@@ -273,10 +475,103 @@
         </div>
 
         <div class="footer">
+            <a href="/about">О нас</a>
+            <a href="/privacy">Конфиденциальность</a>
             <a href="/help">Помощь</a>
             <a href="/terms">Условия использования</a>
-            <a href="/privacy">Конфиденциальность</a>
         </div>
     </div>
+
+    <!-- JavaScript -->
+    <script>
+        let closeTimeout;
+
+        // Закрытие меню с задержкой
+        function scheduleClose() {
+            clearTimeout(closeTimeout);
+            closeTimeout = setTimeout(() => {
+                const dropdown = document.getElementById('dropdownMenu');
+                dropdown.style.opacity = '0';
+                dropdown.style.visibility = 'hidden';
+            }, 3000); // 3 секунды
+        }
+
+        // Отмена закрытия
+        function cancelClose() {
+            clearTimeout(closeTimeout);
+        }
+
+        // Закрытие меню и переход по ссылке
+        function closeDropdownAndRedirect(element) {
+            closeDropdown();
+            // Перейдём по ссылке через 100мс
+            setTimeout(() => {
+                window.location.href = element.href;
+            }, 100);
+        }
+
+        // Закрытие меню
+        function closeDropdown() {
+            const dropdown = document.getElementById('dropdownMenu');
+            dropdown.style.opacity = '0';
+            dropdown.style.visibility = 'hidden';
+        }
+
+        // Переключение темы
+        const body = document.body;
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeText = document.getElementById('theme-text');
+        const icon = themeToggle.querySelector('i');
+
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            body.setAttribute('data-theme', 'light');
+            themeText.textContent = 'Светлая тема';
+            icon.className = 'fas fa-sun';
+        }
+
+        function toggleTheme() {
+            if (body.getAttribute('data-theme') === 'light') {
+                body.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'dark');
+                themeText.textContent = 'Тёмная тема';
+                icon.className = 'fas fa-moon';
+            } else {
+                body.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+                themeText.textContent = 'Светлая тема';
+                icon.className = 'fas fa-sun';
+            }
+        }
+
+        // Уведомления
+        document.querySelector('.notifications').addEventListener('click', () => {
+            alert('Открываем список уведомлений...');
+        });
+
+        // Обработчики событий для контейнера
+        const container = document.getElementById('avatarContainer');
+        const dropdown = document.getElementById('dropdownMenu');
+
+        container.addEventListener('mouseenter', () => {
+            cancelClose();
+            dropdown.style.opacity = '1';
+            dropdown.style.visibility = 'visible';
+        });
+
+        container.addEventListener('mouseleave', () => {
+            scheduleClose();
+        });
+
+        // Обработчики кликов по пунктам меню
+        document.querySelectorAll('.dropdown-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (item.id === 'theme-toggle') {
+                    toggleTheme();
+                }
+            });
+        });
+    </script>
 </body>
 </html>
