@@ -16,11 +16,11 @@ def privacy():
 
 @app.route('/settings')
 def settings():
-    return render_template('settings.html')
+    return render_template('settings-prof.html')
 
-@app.route('/chat')
+@app.route('/chat-norm')
 def chat():
-    return render_template('chat.html')
+    return render_template('chat-norm.html')
 
 @app.route('/start-chat')
 def start_chat():
@@ -43,6 +43,6 @@ def find_user():
     return render_template('find-user.html')
 
 
-if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port, debug=False)  # debug=False!
+
+if __name__ == "__main__":
+    app.run(debug=True)
