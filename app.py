@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-
+import os
 app = Flask(__name__)
 
 @app.route('/')
@@ -42,6 +42,15 @@ def video_call():
 def find_user():
     return render_template('find-user.html')
 
+@app.route('/help')
+def help():
+    return render_template('help.html')
+
+
+
+@app.route('/terms')
+def terms():
+    return render_template('terms.html')
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
