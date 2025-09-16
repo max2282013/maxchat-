@@ -44,7 +44,7 @@
             color: var(--text-primary);
             height: 100vh;
             display: flex;
-            overflow: hidden;
+            overflow-y: auto;
         }
 
         /* Боковая панель */
@@ -438,7 +438,7 @@
                         <i class="fas fa-moon"></i> <span id="theme-text">Тёмная тема</span>
                     </a>
                     <div class="dropdown-divider"></div>
-                    <a href="/profile/edit" class="dropdown-item" onclick="closeDropdownAndRedirect(this);">
+                    <a href="/prof" class="dropdown-item" onclick="closeDropdownAndRedirect(this);">
                         <i class="fas fa-user-edit"></i> Редактировать профиль
                     </a>
                     <a href="/logout" class="dropdown-item" style="color: #ff3b30;" onclick="closeDropdownAndRedirect(this);">
@@ -478,6 +478,7 @@
             <a href="/privacy">Конфиденциальность</a>
             <a href="/help">Помощь</a>
             <a href="/terms">Условия использования</a>
+            <a href="/prof">Условия использования</a>
         </div>
     </div>
 

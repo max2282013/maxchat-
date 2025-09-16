@@ -52,6 +52,10 @@ def help():
 def terms():
     return render_template('terms.html')
 
+@app.route('/prof')
+def prof():
+    return render_template('prof.html')
+
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app.run(debug=False)
