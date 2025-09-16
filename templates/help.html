@@ -139,6 +139,12 @@
         <div class="time-display" id="current-time">
             Загрузка времени...
         </div>
+        <div class="card">
+            <h2>📝Опишите проблему</h2>
+            <textarea id="notepad" rows="6" placeholder="писать сюда..."></textarea>
+            <button onclick="saveNotepad()">Отправить</button>
+            <button onclick="clearNotepad()">Отменить</button>
+        </div>
 
         <div class="card">
             <h2>📋 Генератор паролей</h2>
@@ -147,13 +153,12 @@
             <input type="text" id="password-output" readonly placeholder="Пароль появится здесь">
             <button onclick="copyToClipboard('password-output')">Копировать</button>
         </div>
-
-        <div class="card">
-            <h2>📝Опишите проблему</h2>
-            <textarea id="notepad" rows="6" placeholder="писать сюда..."></textarea>
-            <button onclick="saveNotepad()">Отправить</button>
-            <button onclick="clearNotepad()">Отменить</button>
+        <div>
+            <h2>🧮 Простой калькулятор</h2>
+            <input type="text" id="calc-input" placeholder="Введите выражение, например: 2+2*3">
+            <button onclick="calculate()">Вычислить</button>
         </div>
+
 
         <div class="card">
             <h2>🧮 Простой калькулятор</h2>
