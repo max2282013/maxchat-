@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Чат — MaxChat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #111;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            background: #1e1e1e;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            height: 90vh;
+        }
+
+        .header {
+            background: #2d2d2d;
+            color: white;
+            padding: 15px 20px;
+            font-size: 1.3rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background: #1a1a1a;
+        }
+
+        .msg {
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            line-height: 1.5;
+            position: relative;
+            font-size: 1rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .msg.self {
+            align-self: flex-end;
+            background: #0084ff;
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .msg.other {
+            align-self: flex-start;
+            background: #333;
+            color: #eee;
+            border-bottom-left-radius: 4px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #555;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .message-row {
+            display: flex;
+            gap: 12px;
+            align-items: flex-end;
+        }
+
+        .message-row.self {
+            flex-direction: row-reverse;
+        }
+
+        .input-area {
+            display: flex;
+            padding: 15px;
+            background: #2d2d2d;
+            border-top: 1px solid #444;
+        }
+
+        #message-input {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            background: #333;
+            color: white;
+            border-radius: 30px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        #send-button {
+            width: 50px;
+            height: 50px;
+            border: none;
+            background: #0084ff;
+            color: white;
+            border-radius: 50%;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #send-button:hover {
+            background: #006ccc;
+            transform: scale(1.05);
+        }
+
+        .back-link {
+            text-align: center;
+            padding: 15px;
+            color: #888;
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            color: #0084ff;
+        }
+
+        /* Скроллбар (для WebKit) */
+        .messages::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .messages::-webkit-scrollbar-thumb {
+            background: #444;
+            border-radius: 10px;
+        }
+
+        .messages::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <i class="fas fa-comment-dots"></i> MaxChat
+        </div>
+
+        <div class="messages" id="messages">
+            <!-- Сообщения -->
+            <div class="message-row other">
+                <div class="avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="msg other">
+                    Привет! Ты тут? Это Саша с другого конца города :)
+                </div>
+            </div>
+
+            <div class="message-row self">
+                <div class="avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="msg self">
+                    Привет! Да, я тут. Как дела?
+                </div>
+            </div>
+
+            <div class="message-row other">
+                <div class="avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="msg other">
+                    Отлично! Только что закончил уроки. А ты?
+                </div>
+            </div>
+        </div>
+
+        <div class="input-area">
+            <input type="text" id="message-input" placeholder="Написать сообщение...">
+            <button id="send-button">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+
+        <a href="/" class="back-link">← Вернуться на главную</a>
+    </div>
+
+    <script>
+        const messages = document.getElementById('messages');
+        const messageInput = document.getElementById('message-input');
+        const sendButton = document.getElementById('send-button');
+
+        // Отправка сообщения
+        function sendMessage() {
+            const text = messageInput.value.trim();
+            if (text === '') return;
+
+            // Создаём новое сообщение
+            const msgRow = document.createElement('div');
+            msgRow.className = 'message-row self';
+
+            const avatar = document.createElement('div');
+            avatar.className = 'avatar';
+            avatar.innerHTML = '<i class="fas fa-user-circle"></i>';
+
+            const msg = document.createElement('div');
+            msg.className = 'msg self';
+            msg.textContent = text;
+
+            msgRow.appendChild(avatar);
+            msgRow.appendChild(msg);
+            messages.appendChild(msgRow);
+
+            // Прокрутка вниз
+            messages.scrollTop = messages.scrollHeight;
+
+            // Очистить поле
+            messageInput.value = '';
+
+            // Ответ "Собеседника" через 1-2 сек
+            setTimeout(() => {
+                const replyRow = document.createElement('div');
+                replyRow.className = 'message-row other';
+
+                const replyAvatar = document.createElement('div');
+                replyAvatar.className = 'avatar';
+                replyAvatar.innerHTML = '<i class="fas fa-user"></i>';
+
+                const replyMsg = document.createElement('div');
+                replyMsg.className = 'msg other';
+                replyMsg.textContent = 'Спасибо! Классное сообщение!';
+
+                replyRow.appendChild(replyAvatar);
+                replyRow.appendChild(replyMsg);
+                messages.appendChild(replyRow);
+
+                messages.scrollTop = messages.scrollHeight;
+            }, 1000 + Math.random() * 1000);
+        }
+
+        // Отправка по кнопке
+        sendButton.addEventListener('click', sendMessage);
+
+        // Отправка по Enter
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Авто-прокрутка при загрузке
+        messages.scrollTop = messages.scrollHeight;
+    </script>
+</body>
+</html>

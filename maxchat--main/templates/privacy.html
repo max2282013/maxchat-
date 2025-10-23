@@ -1,0 +1,91 @@
+<!-- templates/privacy.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Конфиденциальность — MaxChat</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #111;
+            color: #eee;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            max-width: 800px;
+            padding: 40px 30px;
+            background: rgba(30, 30, 30, 0.7);
+            border-radius: 15px;
+            border: 1px solid #444;
+        }
+        h1 {
+            font-size: 2.5rem;
+            color: #4fc3f7;
+            margin-bottom: 20px;
+        }
+        p, ul {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            text-align: left;
+            max-width: 600px;
+            margin: 15px auto;
+        }
+        ul {
+            padding-left: 20px;
+            color: #bbdefb;
+        }
+        .highlight {
+            background: #333;
+            padding: 15px;
+            border-radius: 10px;
+            color: #80deea;
+            font-weight: 600;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 25px;
+            background: #4fc3f7;
+            color: black;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .back-btn:hover {
+            background: #03a9f4;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-lock"></i> Конфиденциальность</h1>
+        <p><strong>MaxChat</strong> уважает вашу приватность.</p>
+
+        <div class="highlight">
+            ⚠️ Это учебный проект. Мы <strong>не собираем</strong> ваши данные.
+        </div>
+
+        <p><strong>Что мы не делаем:</strong></p>
+        <ul>
+            <li>Не храним переписку</li>
+            <li>Не собираем имя, почту, номер</li>
+            <li>Не используем куки</li>
+            <li>Не отслеживаем IP</li>
+        </ul>
+
+        <p>Всё, что вы видите — временно. Закрыл страницу — исчезло.</p>
+
+        <a href="/" class="back-btn">← На главную</a>
+    </div>
+</body>
+</html>
