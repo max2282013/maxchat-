@@ -24,7 +24,7 @@ def chat():
 
 @app.route('/start-chat')
 def start_chat():
-    return render_template('start-chat.html')
+    return render_template('chat-norm.html')
 
 @app.route('/call')
 def call():
