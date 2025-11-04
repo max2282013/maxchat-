@@ -20,7 +20,7 @@ def settings():
 
 @app.route('/chat')
 def chat():
-    return render_template('chat.html')
+    return render_template('chat-norm.html')
 
 @app.route('/start-chat')
 def start_chat():
