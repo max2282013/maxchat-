@@ -4,315 +4,399 @@
     <meta charset="UTF-8">
     <title>Найти собеседника — MaxChat</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;600&family=Orbitron:wght@600&display=swap" rel="stylesheet">
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto:wght@400;500&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    body {
-        font-family: 'Roboto', sans-serif;
-        background: #121212;
-        color: white;
-        margin: 0;
-        padding: 0;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        background: linear-gradient(135deg, #16213e, #0f3460);
-        overflow: hidden;
-    }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0b0b0d, #14161f);
+            color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow: hidden;
+        }
 
-    .container {
-        max-width: 600px;
-        width: 90%;
-        text-align: center;
-        padding: 40px 30px;
-        background: rgba(20, 20, 30, 0.7);
-        border-radius: 18px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(100, 200, 255, 0.2);
-    }
+        .container {
+            max-width: 620px;
+            width: 100%;
+            text-align: center;
+            padding: 40px 30px;
+            background: rgba(15, 15, 20, 0.75);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            box-shadow: 
+                0 12px 40px rgba(0, 0, 0, 0.6),
+                inset 0 0 0 1px rgba(80, 80, 100, 0.15);
+            border: 1px solid rgba(60, 60, 80, 0.3);
+        }
 
-    h1 {
-        font-family: 'Orbitron', sans-serif;
-        font-size: 2.4rem;
-        color: #00d4ff;
-        margin-bottom: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 12px;
-    }
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.1rem;
+            color: #00e0b0;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
 
-    p {
-        font-size: 1.1rem;
-        color: #ccc;
-        line-height: 1.7;
-    }
+        p {
+            font-size: 1.05rem;
+            color: #aaa;
+            line-height: 1.6;
+            max-width: 520px;
+            margin: 0 auto 30px;
+        }
 
-    .world {
-        width: 100px;
-        height: 100px;
-        margin: 40px auto;
-        background: #1a1a2e;
-        border-radius: 50%;
-        border: 3px solid #00d4ff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        animation: spin 4s linear infinite;
-        box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
-    }
+        /* 3D-глобус в стиле "консоли" */
+        .globe {
+            width: 120px;
+            height: 120px;
+            margin: 32px auto;
+            position: relative;
+        }
 
-    .world i {
-        font-size: 3rem;
-        color: #00d4ff;
-    }
+        .globe-inner {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: 
+                radial-gradient(circle at 30% 30%, rgba(0, 224, 176, 0.15), transparent 70%),
+                #0f0f15;
+            border: 2px solid rgba(0, 224, 176, 0.3);
+            box-shadow: 0 0 20px rgba(0, 224, 176, 0.15);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: float 3s ease-in-out infinite;
+        }
 
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
+        .globe-inner::before {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 8px;
+            background: rgba(0, 224, 176, 0.5);
+            border-radius: 4px;
+            transform: rotate(-25deg);
+            top: 38%;
+            left: 20%;
+        }
 
-    .status {
-        font-size: 1.3rem;
-        color: #00d4ff;
-        margin: 25px 0;
-        min-height: 30px;
-        font-weight: 500;
-    }
+        .globe-inner i {
+            font-size: 2.8rem;
+            color: rgba(0, 224, 176, 0.7);
+        }
 
-    .btn {
-        padding: 14px 30px;
-        font-size: 1.1rem;
-        font-weight: 600;
-        border: none;
-        border-radius: 30px;
-        cursor: pointer;
-        transition: all 0.3s;
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        margin: 10px;
-    }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
 
-    .btn-find {
-        background: #00d4ff;
-        color: black;
-    }
+        .status {
+            font-size: 1.15rem;
+            font-weight: 500;
+            color: #888;
+            margin: 24px 0;
+            min-height: 26px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
 
-    .btn-stop {
-        background: #ff3b30;
-        color: white;
-    }
+        .status-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #00e0b0;
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: blink 1.8s infinite;
+        }
 
-    .btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-    }
+        @keyframes blink {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
 
-    .connected {
-        display: none;
-        margin-top: 30px;
-        padding: 20px;
-        background: rgba(0, 212, 255, 0.1);
-        border: 1px solid #00d4ff;
-        border-radius: 12px;
-        color: #00d4ff;
-    }
+        .btn {
+            padding: 14px 32px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(20, 20, 25, 0.8);
+            color: #e0e0e0;
+            border: 1px solid rgba(80, 80, 100, 0.2);
+            backdrop-filter: blur(6px);
+        }
 
-    .chat-area {
-        display: none;
-        margin-top: 20px;
-        padding: 15px;
-        background: #1a1a2e;
-        border-radius: 12px;
-        text-align: left;
-        max-height: 200px;
-        overflow-y: auto;
-    }
+        .btn:hover {
+            transform: translateY(-3px);
+            background: rgba(30, 30, 35, 0.9);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
 
-    .msg {
-        padding: 10px 15px;
-        margin: 10px 0;
-        border-radius: 18px;
-        max-width: 80%;
-        line-height: 1.5;
-    }
+        .btn-cancel {
+            background: rgba(220, 50, 50, 0.2);
+            color: #ff6b6b;
+            border-color: rgba(220, 50, 50, 0.3);
+        }
 
-    .msg.own {
-        background: #0084ff;
-        color: white;
-        margin-left: auto;
-        border-bottom-right-radius: 4px;
-    }
+        .btn-cancel:hover {
+            background: rgba(220, 50, 50, 0.3);
+            color: #ff8080;
+        }
 
-    .msg.other {
-        background: #333;
-        color: #eee;
-        margin-right: auto;
-        border-bottom-left-radius: 4px;
-    }
+        .btn-connected {
+            color: #00e0b0;
+            border-color: rgba(0, 224, 176, 0.4);
+            box-shadow: 0 0 0 0 rgba(0, 224, 176, 0);
+            animation: pulse-border 2s infinite;
+        }
 
-    #chat-input-area {
-        display: none;
-        margin-top: 20px;
-        display: flex;
-        gap: 10px;
-    }
+        @keyframes pulse-border {
+            0% { box-shadow: 0 0 0 0 rgba(0, 224, 176, 0.3); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 224, 176, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 224, 176, 0); }
+        }
 
-    #chat-input {
-        flex: 1;
-        padding: 12px;
-        border: none;
-        background: #333;
-        color: white;
-        border-radius: 30px;
-        outline: none;
-    }
+        .connected,
+        .chat-area,
+        #chat-input-area {
+            display: none;
+        }
 
-    #send-btn {
-        padding: 0 20px;
-        background: #00d4ff;
-        color: black;
-        border: none;
-        border-radius: 30px;
-        cursor: pointer;
-    }
+        .connected {
+            margin: 24px 0 16px;
+            padding: 14px 22px;
+            background: rgba(0, 40, 35, 0.4);
+            border-radius: 16px;
+            color: #00e0b0;
+            font-weight: 500;
+            border: 1px solid rgba(0, 224, 176, 0.2);
+        }
 
-    .back-link {
-        display: inline-block;
-        margin-top: 30px;
-        color: #888;
-        text-decoration: none;
-        font-size: 0.95rem;
-    }
+        .chat-area {
+            margin-top: 16px;
+            padding: 16px;
+            background: rgba(10, 10, 15, 0.6);
+            border-radius: 16px;
+            text-align: left;
+            max-height: 220px;
+            overflow-y: auto;
+            border: 1px solid rgba(60, 60, 80, 0.2);
+        }
 
-    .back-link:hover {
-        color: #00d4ff;
-    }
+        .msg {
+            padding: 10px 16px;
+            margin: 10px 0;
+            border-radius: 18px;
+            max-width: 80%;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
 
-    /* Скроллбар */
-    .chat-area::-webkit-scrollbar {
-        width: 6px;
-    }
+        .msg.own {
+            background: rgba(0, 224, 176, 0.15);
+            color: #e0e0e0;
+            margin-left: auto;
+            border-bottom-right-radius: 6px;
+            border: 1px solid rgba(0, 224, 176, 0.2);
+        }
 
-    .chat-area::-webkit-scrollbar-thumb {
-        background: #00d4ff;
-        border-radius: 10px;
-    }
-</style>
+        .msg.other {
+            background: rgba(40, 40, 50, 0.6);
+            color: #d0d0d0;
+            margin-right: auto;
+            border-bottom-left-radius: 6px;
+            border: 1px solid rgba(80, 80, 100, 0.2);
+        }
+
+        #chat-input-area {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        #chat-input {
+            flex: 1;
+            padding: 13px 20px;
+            border: none;
+            background: rgba(25, 25, 35, 0.7);
+            color: white;
+            border-radius: 50px;
+            outline: none;
+            font-size: 1rem;
+            border: 1px solid rgba(80, 80, 100, 0.3);
+        }
+
+        #chat-input::placeholder {
+            color: #666;
+        }
+
+        #send-btn {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: #00e0b0;
+            color: #0b0b0d;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            transition: all 0.2s;
+        }
+
+        #send-btn:hover {
+            background: #00f0c0;
+            transform: scale(1.08);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 28px;
+            color: #777;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: #00e0b0;
+        }
+
+        /* Скроллбар */
+        .chat-area::-webkit-scrollbar {
+            width: 6px;
+        }
+        .chat-area::-webkit-scrollbar-thumb {
+            background: rgba(0, 224, 176, 0.3);
+            border-radius: 10px;
+        }
+        .chat-area::-webkit-scrollbar-track {
+            background: transparent;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1><i class="fas fa-random"></i> Найти собеседника</h1>
-        <p>Подключись к случайному человеку из любой точки мира. Анонимно, бесплатно, без регистрации.</p>
+        <h1><i class="fas fa-random"></i> Случайный чат</h1>
+        <p>Анонимно. Без регистрации. Шифрование end-to-end. Просто нажми — и поговори.</p>
 
-        <div class="world">
-            <i class="fas fa-globe"></i>
+        <div class="globe">
+            <div class="globe-inner">
+                <i class="fas fa-globe-americas"></i>
+            </div>
         </div>
 
-        <div class="status" id="status">Поиск... <span class="pulse">●</span></div>
+        <div class="status" id="status">
+            Поиск собеседника... <span class="status-dot"></span>
+        </div>
 
-        <button class="btn btn-stop" id="stop-btn">
-            <i class="fas fa-ban"></i> Остановить поиск
+        <button class="btn btn-cancel" id="action-btn">
+            <i class="fas fa-ban"></i> Отменить поиск
         </button>
 
-        <!-- Сообщение о подключении -->
         <div class="connected" id="connected">
-            ✅ Подключено! Теперь вы можете общаться.
+            ✅ Подключено к анонимному пользователю
         </div>
 
-        <!-- Чат -->
         <div class="chat-area" id="chat-area">
             <div class="msg other">
-                Привет! Я из России. А ты откуда?
+                Привет 👋 Ты тоже в MaxChat?
             </div>
         </div>
 
         <div id="chat-input-area">
-            <input type="text" id="chat-input" placeholder="Написать сообщение...">
+            <input type="text" id="chat-input" placeholder="Введите сообщение...">
             <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
         </div>
 
-        <a href="/" class="back-link">← Вернуться на главную</a>
+        <a href="/" class="back-link">
+            <i class="fas fa-arrow-left"></i> Вернуться
+        </a>
     </div>
 
     <script>
-        const status = document.getElementById('status');
-        const stopBtn = document.getElementById('stop-btn');
-        const connected = document.getElementById('connected');
+        const statusEl = document.getElementById('status');
+        const actionBtn = document.getElementById('action-btn');
+        const connectedEl = document.getElementById('connected');
         const chatArea = document.getElementById('chat-area');
         const chatInputArea = document.getElementById('chat-input-area');
         const chatInput = document.getElementById('chat-input');
         const sendBtn = document.getElementById('send-btn');
 
-        let finding = true;
-        let connectedUser = false;
-
-        // Анимация "пульс"
-        const pulse = document.querySelector('.pulse');
-        setInterval(() => {
-            pulse.style.opacity = pulse.style.opacity == 0.3 ? 1 : 0.3;
-        }, 600);
-
-        // Смена статуса каждые 1.5 сек
-        const messages = [
-            "Ищем по Европе...",
-            "Проверяем Азию...",
-            "Соединяем с Америкой...",
-            "Где-то в Африке...",
-            "Океания на линии..."
+        let phase = 'searching'; // searching → connected
+        let messages = [
+            'Сканируем Европу…',
+            'Проверяем Азию…',
+            'Активные пользователи в СНГ…',
+            'Один онлайн в США…',
+            'Найден: анонимный пользователь ✅'
         ];
-        let msgIndex = 0;
+        let i = 0;
 
-        const searchLoop = setInterval(() => {
-            if (!finding) return;
-            status.textContent = messages[msgIndex];
-            msgIndex = (msgIndex + 1) % messages.length;
-        }, 1500);
-
-        // Остановить поиск → подключиться
-        stopBtn.addEventListener('click', () => {
-            if (!finding) {
-                // Уже подключены — завершаем
-                alert("Соединение завершено.");
-                window.location.href = "/";
-                return;
+        // Имитация поиска
+        const interval = setInterval(() => {
+            if (phase !== 'searching') return;
+            statusEl.textContent = messages[i];
+            i++;
+            if (i === messages.length - 1) {
+                setTimeout(() => connect(), 800);
             }
+        }, 1100);
 
-            finding = false;
-            clearInterval(searchLoop);
+        function connect() {
+            clearInterval(interval);
+            phase = 'connected';
 
-            status.innerHTML = "✅ Собеседник найден!";
-            stopBtn.innerHTML = '<i class="fas fa-phone-slash"></i> Завершить';
-            stopBtn.classList.remove('btn-stop');
-            stopBtn.classList.add('btn-find');
-            stopBtn.style.background = '#bb86fc';
+            statusEl.innerHTML = '✅ В сети';
+            statusEl.style.color = '#00e0b0';
 
-            // Показать подтверждение и чат
-            connected.style.display = 'block';
+            actionBtn.innerHTML = '<i class="fas fa-phone-slash"></i> Завершить';
+            actionBtn.classList.remove('btn-cancel');
+            actionBtn.classList.add('btn-connected');
+
+            connectedEl.style.display = 'block';
             chatArea.style.display = 'block';
             chatInputArea.style.display = 'flex';
 
-            connectedUser = true;
+            // Прокрутка вниз
+            chatArea.scrollTop = chatArea.scrollHeight;
+        }
 
-            // Эффект "звук подключения"
-            setTimeout(() => {
-                if (typeof Audio !== "undefined") {
-                    const audio = new Audio("https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3");
-                    audio.play().catch(e => console.log("Звук заблокирован"));
-                }
-            }, 500);
+        actionBtn.addEventListener('click', () => {
+            if (phase === 'searching') {
+                clearInterval(interval);
+                alert('Поиск отменён.');
+                window.location.href = '/';
+            } else {
+                alert('Соединение завершено.');
+                window.location.href = '/';
+            }
         });
 
-        // Отправка сообщения
         function sendMessage() {
             const text = chatInput.value.trim();
-            if (!text || !connectedUser) return;
+            if (!text) return;
 
             const msg = document.createElement('div');
             msg.className = 'msg own';
@@ -322,29 +406,29 @@
             chatInput.value = '';
             chatArea.scrollTop = chatArea.scrollHeight;
 
-            // Случайный ответ
-            setTimeout(() => {
-                const replies = [
-                    "Интересно! А что дальше?",
-                    "Я тоже так думал!",
-                    "Ха-ха, это круто!",
-                    "А у тебя есть хобби?",
-                    "Прикольно! А в какой школе учишься?"
-                ];
-                const reply = document.createElement('div');
-                reply.className = 'msg other';
-                reply.textContent = replies[Math.floor(Math.random() * replies.length)];
-                chatArea.appendChild(reply);
-                chatArea.scrollTop = chatArea.scrollHeight;
-            }, 1000 + Math.random() * 2000);
+            // Имитация ответа
+            if (phase === 'connected') {
+                setTimeout(() => {
+                    const replies = [
+                        "Круто! А ты давно в MaxChat?",
+                        "Ха, тоже так думаю 😄",
+                        "А как тебе новый интерфейс?",
+                        "Интересная мысль!",
+                        "Я тут впервые… всё нравится!"
+                    ];
+                    const reply = document.createElement('div');
+                    reply.className = 'msg other';
+                    reply.textContent = replies[Math.floor(Math.random() * replies.length)];
+                    chatArea.appendChild(reply);
+                    chatArea.scrollTop = chatArea.scrollHeight;
+                }, 1200);
+            }
         }
 
         sendBtn.addEventListener('click', sendMessage);
-        chatInput.addEventListener('keypress', (e) => {
+        chatInput.addEventListener('keypress', e => {
             if (e.key === 'Enter') sendMessage();
         });
-
-        chatArea.scrollTop = chatArea.scrollHeight;
     </script>
 </body>
 </html>

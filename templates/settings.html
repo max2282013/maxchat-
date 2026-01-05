@@ -2,79 +2,112 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Настройки — MaxChat</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Настройки — MaxChat</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💬</text></svg>">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
-
-        body {
-            font-family: 'Open Sans', sans-serif;
-            background: #121212;
-            color: #e0e0e0;
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0f0f0f;
+            color: #e0e0e0;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
+            padding: 20px;
         }
 
         .container {
-            width: 90%;
-            max-width: 600px;
-            margin: 50px auto;
-            padding: 30px;
-            background: #1e1e1e;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 580px;
+            margin: 40px auto;
+            padding: 32px 24px;
+            background: rgba(30, 30, 30, 0.85);
+            border-radius: 16px;
+            border: 1px solid #333;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
         }
 
-        h1 {
-            font-size: 2.3rem;
-            color: #bb86fc;
+        .header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 32px;
+        }
+
+        .header h1 {
+            font-size: 2.1rem;
+            font-weight: 600;
+            color: #4fc3f7;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 12px;
         }
 
-        .setting {
-            background: #2d2d2d;
+        .header .logo {
+            font-weight: 700;
+            background: linear-gradient(90deg, #4fc3f7, #03dac6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .setting-group {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .setting-item {
+            background: #222;
+            border-radius: 14px;
             padding: 18px 20px;
-            margin: 15px 0;
-            border-radius: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: background 0.3s;
+            transition: all 0.25s ease;
+            cursor: pointer;
         }
 
-        .setting:hover {
-            background: #333;
+        .setting-item:hover {
+            background: #2a2a2a;
+            transform: translateX(4px);
         }
 
         .setting-label {
-            font-size: 1.1rem;
-            color: #fff;
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: #f0f0f0;
         }
 
-        .switch {
+        .setting-desc {
+            font-size: 0.82rem;
+            color: #999;
+            margin-top: 4px;
+        }
+
+        /* Стиль переключателя */
+        .toggle {
             position: relative;
             display: inline-block;
-            width: 60px;
-            height: 30px;
+            width: 54px;
+            height: 28px;
         }
 
-        .switch input {
+        .toggle input {
             opacity: 0;
             width: 0;
             height: 0;
         }
 
-        .slider {
+        .toggle-slider {
             position: absolute;
             cursor: pointer;
             top: 0;
@@ -82,110 +115,172 @@
             right: 0;
             bottom: 0;
             background: #444;
+            border-radius: 28px;
             transition: 0.3s;
-            border-radius: 30px;
         }
 
-        .slider:before {
+        .toggle-slider:before {
             position: absolute;
             content: "";
-            height: 22px;
-            width: 22px;
+            height: 20px;
+            width: 20px;
             left: 4px;
             bottom: 4px;
             background: #bbb;
-            transition: 0.3s;
             border-radius: 50%;
+            transition: 0.3s;
         }
 
-        input:checked + .slider {
+        .toggle input:checked + .toggle-slider {
             background: #03dac6;
         }
 
-        input:checked + .slider:before {
-            transform: translateX(30px);
-            background: white;
+        .toggle input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+            background: #fff;
         }
 
-        .info {
-            font-size: 0.9rem;
-            color: #aaa;
-            text-align: center;
-            margin-top: 20px;
-            line-height: 1.5;
+        /* Информационный блок */
+        .info-box {
+            margin-top: 30px;
+            padding: 18px;
+            background: #1a1a1a;
+            border-radius: 12px;
+            border-left: 4px solid #4fc3f7;
+            font-size: 0.92rem;
+            line-height: 1.6;
+            color: #ccc;
+        }
+
+        .info-box strong {
+            color: #bbdefb;
         }
 
         .back-btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 12px 25px;
-            background: #bb86fc;
-            color: black;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 28px;
+            padding: 13px 28px;
+            background: #4fc3f7;
+            color: #000;
             font-weight: 600;
             text-decoration: none;
             border-radius: 30px;
-            transition: 0.3s;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            justify-content: center;
         }
 
         .back-btn:hover {
-            background: #a370db;
-            transform: scale(1.05);
+            background: #03a9f4;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(3, 169, 244, 0.3);
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 24px 16px;
+            }
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            .setting-label {
+                font-size: 1rem;
+            }
+            .back-btn {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1><i class="fas fa-cog"></i> Настройки</h1>
-
-        <div class="setting">
-            <span class="setting-label">Тёмная тема</span>
-            <label class="switch">
-                <input type="checkbox" checked>
-                <span class="slider"></span>
-            </label>
+        <div class="header">
+            <h1><i class="fas fa-cog"></i> <span class="logo">MaxChat</span></h1>
         </div>
 
-        <div class="setting">
-            <span class="setting-label">Уведомления</span>
-            <label class="switch">
-                <input type="checkbox" checked>
-                <span class="slider"></span>
-            </label>
+        <div class="setting-group">
+            <div class="setting-item" onclick="toggleSetting('theme')">
+                <div>
+                    <div class="setting-label">Тёмная тема</div>
+                    <div class="setting-desc">Включена по умолчанию</div>
+                </div>
+                <label class="toggle">
+                    <input type="checkbox" id="theme" checked aria-label="Тёмная тема">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-item" onclick="toggleSetting('notifications')">
+                <div>
+                    <div class="setting-label">Уведомления</div>
+                    <div class="setting-desc">Звук и всплывающие оповещения</div>
+                </div>
+                <label class="toggle">
+                    <input type="checkbox" id="notifications" checked aria-label="Уведомления">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-item" onclick="toggleSetting('autoMedia')">
+                <div>
+                    <div class="setting-label">Загрузка медиа</div>
+                    <div class="setting-desc">Автоматически показывать фото/видео</div>
+                </div>
+                <label class="toggle">
+                    <input type="checkbox" id="autoMedia" aria-label="Автозагрузка медиа">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-item" onclick="toggleSetting('sound')">
+                <div>
+                    <div class="setting-label">Звук в чате</div>
+                    <div class="setting-desc">При получении нового сообщения</div>
+                </div>
+                <label class="toggle">
+                    <input type="checkbox" id="sound" checked aria-label="Звук в чате">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-item" onclick="toggleSetting('discoverable')">
+                <div>
+                    <div class="setting-label">Видимость</div>
+                    <div class="setting-desc">Показывать вас в списке онлайн</div>
+                </div>
+                <label class="toggle">
+                    <input type="checkbox" id="discoverable" checked aria-label="Видимость в поиске">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
         </div>
 
-        <div class="setting">
-            <span class="setting-label">Автозагрузка фото</span>
-            <label class="switch">
-                <input type="checkbox">
-                <span class="slider"></span>
-            </label>
-        </div>
-
-        <div class="setting">
-            <span class="setting-label">Звук в чате</span>
-            <label class="switch">
-                <input type="checkbox" checked>
-                <span class="slider"></span>
-            </label>
-        </div>
-
-        <div class="setting">
-            <span class="setting-label">Видимость в поиске</span>
-            <label class="switch">
-                <input type="checkbox" checked>
-                <span class="slider"></span>
-            </label>
-        </div>
-
-        <p class="info">
-            Пока что эти настройки — визуальные. В будущем они будут сохраняться и влиять на работу сайта.
+        <div class="info-box">
+            ⚙️ Пока что настройки работают только визуально — это часть процесса обучения.
             <br><br>
-            MaxChat — проект ученика 6 класса из России.
-        </p>
+            <strong>MaxChat</strong> — учебный проект, созданный шестиклассником из России.  
+            Никакие данные не сохраняются. Переписка исчезает после закрытия страницы.
+        </div>
 
         <a href="/" class="back-btn">
             <i class="fas fa-arrow-left"></i> На главную
         </a>
     </div>
+
+    <script>
+        // Простая заглушка: переключатели реагируют на клик по всей строке
+        function toggleSetting(id) {
+            const checkbox = document.getElementById(id);
+            if (checkbox) {
+                checkbox.checked = !checkbox.checked;
+            }
+        }
+
+        // (В будущем здесь можно будет добавить localStorage или отправку на сервер)
+    </script>
 </body>
 </html>
