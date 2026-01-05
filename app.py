@@ -3,6 +3,10 @@ import os
 app = Flask(__name__)
 
 @app.route('/')
+def register():
+    return render_template('register.html')
+
+@app.route('/index')
 def index():
     return render_template('index.html')
 
@@ -46,8 +50,6 @@ def find_user():
 def help():
     return render_template('help.html')
 
-
-
 @app.route('/terms')
 def terms():
     return render_template('terms.html')
@@ -55,6 +57,10 @@ def terms():
 @app.route('/prof')
 def prof():
     return render_template('prof.html')
+
+@app.route('/register')
+def register():
+    return render_template('register.html')
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
