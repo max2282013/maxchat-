@@ -58,9 +58,6 @@ def terms():
 def prof():
     return render_template('prof.html')
 
-@app.route('/register')
-def register():
-    return render_template('register.html')
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
